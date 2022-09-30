@@ -3,6 +3,7 @@
 use App\Http\Controllers\AbsenController;
 use App\Http\Controllers\AbsenPulangController;
 use App\Http\Controllers\Auth\LoginController;
+use App\Http\Controllers\ProjekController;
 use App\Models\Absen;
 use App\Models\User;
 use Illuminate\Support\Facades\Route;
@@ -30,6 +31,11 @@ Auth::routes();
 Route::post('signin', [LoginController::class, 'signin'])->name('login');
 Route::get('logout', [LoginController::class, 'logout'])->name('logout');
 
-// absen-datang
+// absen
 Route::resource('absens-datang', AbsenController::class);
 Route::resource('absens-pulang', AbsenPulangController::class);
+
+// projek
+Route::resource('projeks', ProjekController::class);
+Route::put('projeks/selesai/{id}', [ProjekController::class, 'selesai'])->name('projeks.selesai');
+Route::put('projeks/belum/{id}', [ProjekController::class, 'belum'])->name('projeks.belum');

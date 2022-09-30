@@ -1286,6 +1286,12 @@ h6 {
 
 /* Datatable */
 
+
+/* .datatable {
+    table-layout: fixed !important;
+    word-wrap: break-word;
+} */
+
 .dataTable-selector {
     border-radius: 0.55rem;
     height: 2.2rem;

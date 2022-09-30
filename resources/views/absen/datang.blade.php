@@ -48,8 +48,12 @@
                                             @endif
                                         </td>
                                         <td>
-                                            @if (\Carbon\Carbon::parse($item->created_at)->translatedFormat('d') == \Carbon\Carbon::now()->format('d') &&
-                                                $item->status == true)
+                                            @if (\Carbon\Carbon::parse($item->created_at)->translatedFormat('d') != \Carbon\Carbon::now()->format('d'))
+                                                <div class="form-check form-switch">
+                                                    <input class="form-check-input" type="checkbox" id="status"
+                                                        name="status" title='Masuk' onclick="return false;">
+                                                </div>
+                                            @elseif($item->status == true)
                                                 <div class="form-check form-switch">
                                                     <input class="form-check-input" type="checkbox" id="status"
                                                         name="status" title='Masuk' checked onclick="return false;">

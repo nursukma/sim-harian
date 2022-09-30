@@ -45,6 +45,11 @@ class User extends Authenticatable
 
     public function absen()
     {
-        return $this->hasMany(Absen::class);
+        return $this->hasMany(Absen::class, 'user_id', 'id');
+    }
+
+    public function projek()
+    {
+        return $this->hasMany(Projek::class, 'user_id', 'id');
     }
 }

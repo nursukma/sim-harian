@@ -33,7 +33,7 @@
          <li class="nav-heading">Projek</li>
 
          <li class="nav-item">
-             <a class="nav-link collapsed" href="users-profile.html">
+             <a class="nav-link collapsed" href="/projeks">
                  <i class="ri-bookmark-3-line"></i>
                  <span>Data Projek</span>
              </a>
