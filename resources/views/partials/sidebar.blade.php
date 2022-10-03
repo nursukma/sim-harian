@@ -40,14 +40,14 @@
          </li><!-- End Data Projek Page Nav -->
 
          <li class="nav-item">
-             <a class="nav-link collapsed" href="pages-faq.html">
+             <a class="nav-link collapsed" href="/kegiatan-harian">
                  <i class="ri-health-book-line"></i>
                  <span>Kegiatan Harian</span>
              </a>
          </li><!-- End Kegiatan Harian Page Nav -->
 
          <li class="nav-item">
-             <a class="nav-link collapsed" href="pages-contact.html">
+             <a class="nav-link collapsed" href="/catatan">
                  <i class="ri-sticky-note-line"></i>
                  <span>Catatan</span>
              </a>

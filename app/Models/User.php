@@ -52,4 +52,14 @@ class User extends Authenticatable
     {
         return $this->hasMany(Projek::class, 'user_id', 'id');
     }
+
+    public function kegiatan()
+    {
+        return $this->hasMany(KegiatanHarian::class, 'user_id', 'id');
+    }
+
+    public function catatan()
+    {
+        return $this->hasMany(Catatan::class, 'user_id', 'id');
+    }
 }

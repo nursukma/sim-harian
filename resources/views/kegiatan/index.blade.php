@@ -3,11 +3,11 @@
 @section('content')
     <main id="main" class="main">
         <div class="pagetitle">
-            <h1>Data Projek</h1>
+            <h1>Data Kegiatan</h1>
             <nav>
                 <ol class="breadcrumb">
                     <li class="breadcrumb-item"><a href="/dashboard">Dashboard</a></li>
-                    <li class="breadcrumb-item active">Projek</li>
+                    <li class="breadcrumb-item active">Kegiatan Harian</li>
                 </ol>
             </nav>
         </div><!-- End Page Title -->
@@ -17,7 +17,7 @@
                 {{-- table data absen --}}
                 <div class="card">
                     <div class="card-header d-flex align-items-center justify-content-between mb-0">
-                        <h5 class="card-title">Tabel Projek</h5>
+                        <h5 class="card-title">Tabel Kegiatan</h5>
                         <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#addModal">
                             Tambah
                         </button>
@@ -28,9 +28,8 @@
                                 <tr>
                                     <th scope="col">No</th>
                                     <th scope="col">Nama Projek</th>
-                                    <th scope="col">Deskripsi</th>
-                                    <th scope="col">Keterangan</th>
-                                    <th scope="col">Status</th>
+                                    <th scope="col">Kegiatan</th>
+                                    <th scope="col">Hari</th>
                                     <th scope="col">Aksi</th>
                                 </tr>
                             </thead>
@@ -39,49 +38,28 @@
                                     <tr>
                                         <th scope="row">{{ $loop->iteration }}</th>
                                         <td>
-                                            {{ $item->nama_projek }}
+                                            {{ $item->projek->nama_projek }}
                                         </td>
                                         <td>
-                                            {{ $item->deskripsi }}
+                                            {{ $item->kegiatan }}
                                         </td>
                                         <td>
-                                            {{ $item->keterangan }}
-                                        </td>
-                                        <td>
-                                            @if ($item->status == true)
-                                                <form action="{{ route('projeks.belum', $item->id) }}" method="post">
-                                                    @method('put')
-                                                    @csrf
-                                                    <div class="form-check form-switch">
-                                                        <input class="form-check-input" type="checkbox" id="status"
-                                                            name="status" title="Selesai" checked onclick="submit()">
-                                                    </div>
-                                                </form>
-                                            @else
-                                                <form action="{{ route('projeks.selesai', $item->id) }}" method="post">
-                                                    @method('put')
-                                                    @csrf
-                                                    <div class="form-check form-switch">
-                                                        <input class="form-check-input" type="checkbox" id="status"
-                                                            name="status" title="Belum Selesai" onclick="submit()">
-                                                    </div>
-                                                </form>
-                                            @endif
+                                            {{ \Carbon\Carbon::parse($item->created_at)->translatedFormat('l, d F Y') }}
                                         </td>
                                         <td>
                                             <button type="button" class="btn btn-light rounded-pill" title="Ubah"
                                                 id='edit' name='edit' data-bs-toggle="modal"
                                                 data-bs-target="#editModal"
-                                                data-bs-act="{{ route('projeks.update', $item->id) }}"
-                                                data-bs-nama_projek="{{ $item->nama_projek }}"
-                                                data-bs-deskripsi="{{ $item->deskripsi }}"
-                                                data-bs-keterangan="{{ $item->keterangan }}">
+                                                data-bs-act="{{ route('kegiatan-harian.update', $item->id) }}"
+                                                data-bs-kegiatan="{{ $item->kegiatan }}"
+                                                data-bs-projek_id="{{ $item->projek_id }}">
                                                 <i class="ri-edit-2-line"></i></button>
                                             <button type="button" class="btn btn-light rounded-pill" title="Hapus"
                                                 id="hapus" name="hapus" data-bs-toggle="modal"
                                                 data-bs-target="#deleteModal"
-                                                data-bs-act="{{ route('projeks.destroy', $item->id) }}"
-                                                data-bs-id="{{ $item->id }}" data-bs-name="{{ $item->nama_projek }}">
+                                                data-bs-act="{{ route('kegiatan-harian.destroy', $item->id) }}"
+                                                data-bs-id="{{ $item->id }}"
+                                                data-bs-name="{{ $item->projek->nama_projek }}">
                                                 <i class="ri-delete-bin-line"></i></button>
                                         </td>
                                     </tr>
@@ -96,32 +74,38 @@
                     <div class="modal-dialog modal-md modal-dialog-centered">
                         <div class="modal-content">
                             <div class="modal-header">
-                                <h5 class="modal-title">Tambah Projek</h5>
+                                <h5 class="modal-title">Tambah Kegiatan</h5>
                                 <button type="button" class="btn-close" data-bs-dismiss="modal"
                                     aria-label="Close"></button>
                             </div>
-                            <form class="row g-3 needs-validation" action="{{ route('projeks.store') }}" method="post"
-                                novalidate>
+                            <form class="row g-3 needs-validation" action="{{ route('kegiatan-harian.store') }}"
+                                method="post" novalidate>
                                 @csrf
                                 <div class="modal-body">
                                     <div class="row g-3">
                                         <div class="col-12">
+                                            <label for="deskripsi" class="form-label">Hari</label>
+                                            <input class="form-control" id="tanggal" name="tanggal"
+                                                value="{{ \Carbon\Carbon::now()->translatedFormat('l, d F Y') }}" readonly>
+                                        </div>
+                                        <div class="col-12">
                                             <label for="nama_projek" class="form-label">Nama Projek</label>
-                                            <input type="text" class="form-control" id="nama_projek" name="nama_projek">
+                                            <select class="form-select" aria-label="Nama Projek" name="projek_id"
+                                                id="projek_id">
+                                                <option selected disabled>Pilih salah satu</option>
+                                                @foreach ($projek as $item)
+                                                    <option value="{{ $item->id }}">{{ $item->nama_projek }}</option>
+                                                @endforeach
+                                            </select>
                                         </div>
                                         <div class="col-12">
-                                            <label for="deskripsi" class="form-label">Deskripsi</label>
-                                            <textarea class="form-control" id="deskripsi" name="deskripsi" style="height: 100px;"></textarea>
-                                        </div>
-                                        <div class="col-12">
-                                            <label for="deskripsi" class="form-label">Keterangan</label>
-                                            <textarea class="form-control" id="keterangan" name="keterangan" style="height: 100px;"></textarea>
+                                            <label for="kegiatan" class="form-label">Kegiatan</label>
+                                            <textarea class="form-control" id="kegiatan" name="kegiatan" style="height: 150px;"></textarea>
                                         </div>
                                     </div>
                                 </div>
                                 <div class="modal-footer">
-                                    <button type="button" class="btn btn-secondary"
-                                        data-bs-dismiss="modal">Tutup</button>
+                                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Tutup</button>
                                     <button type="submit" class="btn btn-success">Simpan</button>
                                 </div>
                             </form>
@@ -134,7 +118,7 @@
                     <div class="modal-dialog modal-md modal-dialog-centered">
                         <div class="modal-content">
                             <div class="modal-header">
-                                <h5 class="modal-title">Ubah Projek</h5>
+                                <h5 class="modal-title">Ubah Kegiatan</h5>
                                 <button type="button" class="btn-close" data-bs-dismiss="modal"
                                     aria-label="Close"></button>
                             </div>
@@ -145,17 +129,24 @@
                                 <div class="modal-body">
                                     <div class="row g-3">
                                         <div class="col-12">
+                                            <label for="deskripsi" class="form-label">Hari</label>
+                                            <input class="form-control" id="tanggal" name="tanggal"
+                                                value="{{ \Carbon\Carbon::now()->translatedFormat('l, d F Y') }}"
+                                                readonly>
+                                        </div>
+                                        <div class="col-12">
                                             <label for="nama_projek" class="form-label">Nama Projek</label>
-                                            <input type="text" class="form-control" id="nama_projek"
-                                                name="nama_projek">
+                                            <select class="form-select" aria-label="Nama Projek" name="projek_id"
+                                                id="projek_id">
+                                                <option selected disabled>Pilih salah satu</option>
+                                                @foreach ($projek as $item)
+                                                    <option value="{{ $item->id }}">{{ $item->nama_projek }}</option>
+                                                @endforeach
+                                            </select>
                                         </div>
                                         <div class="col-12">
-                                            <label for="deskripsi" class="form-label">Deskripsi</label>
-                                            <textarea class="form-control" id="deskripsi" name="deskripsi" style="height: 100px;"></textarea>
-                                        </div>
-                                        <div class="col-12">
-                                            <label for="deskripsi" class="form-label">Keterangan</label>
-                                            <textarea class="form-control" id="keterangan" name="keterangan" style="height: 100px;"></textarea>
+                                            <label for="kegiatan" class="form-label">Kegiatan</label>
+                                            <textarea class="form-control" id="kegiatan" name="kegiatan" style="height: 150px;"></textarea>
                                         </div>
                                     </div>
                                 </div>
@@ -184,8 +175,8 @@
                                 @method('delete')
                                 <div class="modal-body">
                                     <p class="text-center">
-                                        Yakin untuk menghapus <strong class="badge border-danger border-1 text-danger"
-                                            id="nama-projek"> </strong>?
+                                        Yakin untuk menghapus kegiatan projek <strong
+                                            class="badge border-danger border-1 text-danger" id="nama-projek"> </strong>?
                                     </p>
                                     <div class="alert alert-danger text-center" role="alert">
                                         <i class="bi bi-exclamation-octagon me-1"></i>
@@ -221,9 +212,8 @@
                 const updateButton = $(event.relatedTarget);
 
                 updateForm.attr('action', updateButton.attr('data-bs-act'));
-                updateForm.find('#nama_projek').val(updateButton.attr('data-bs-nama_projek'));
-                updateForm.find('#deskripsi').val(updateButton.attr('data-bs-deskripsi'));
-                updateForm.find('#keterangan').val(updateButton.attr('data-bs-keterangan'));
+                updateForm.find('#projek_id').val(updateButton.attr('data-bs-projek_id'));
+                updateForm.find('#kegiatan').val(updateButton.attr('data-bs-kegiatan'));
             }).bind('hide.bs.modal', e => {
                 const updateForm = $('form#update-form');
                 updateForm.attr('action', '/');

@@ -6,6 +6,7 @@
             <h1>Absensi</h1>
             <nav>
                 <ol class="breadcrumb">
+                    <li class="breadcrumb-item"><a href="/dashboard">Dashboard</a></li>
                     <li class="breadcrumb-item"><a href="#">Absen</a></li>
                     <li class="breadcrumb-item active">Pulang</li>
                 </ol>

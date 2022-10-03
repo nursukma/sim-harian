@@ -3,11 +3,11 @@
 @section('content')
     <main id="main" class="main">
         <div class="pagetitle">
-            <h1>Data Projek</h1>
+            <h1>Data Catatan</h1>
             <nav>
                 <ol class="breadcrumb">
                     <li class="breadcrumb-item"><a href="/dashboard">Dashboard</a></li>
-                    <li class="breadcrumb-item active">Projek</li>
+                    <li class="breadcrumb-item active">Catatan</li>
                 </ol>
             </nav>
         </div><!-- End Page Title -->
@@ -17,7 +17,7 @@
                 {{-- table data absen --}}
                 <div class="card">
                     <div class="card-header d-flex align-items-center justify-content-between mb-0">
-                        <h5 class="card-title">Tabel Projek</h5>
+                        <h5 class="card-title">Tabel Catatan</h5>
                         <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#addModal">
                             Tambah
                         </button>
@@ -27,10 +27,8 @@
                             <thead>
                                 <tr>
                                     <th scope="col">No</th>
-                                    <th scope="col">Nama Projek</th>
-                                    <th scope="col">Deskripsi</th>
-                                    <th scope="col">Keterangan</th>
-                                    <th scope="col">Status</th>
+                                    <th scope="col">Catatan</th>
+                                    <th scope="col">Hari</th>
                                     <th scope="col">Aksi</th>
                                 </tr>
                             </thead>
@@ -39,49 +37,24 @@
                                     <tr>
                                         <th scope="row">{{ $loop->iteration }}</th>
                                         <td>
-                                            {{ $item->nama_projek }}
+                                            {{ $item->catatan }}
                                         </td>
                                         <td>
-                                            {{ $item->deskripsi }}
-                                        </td>
-                                        <td>
-                                            {{ $item->keterangan }}
-                                        </td>
-                                        <td>
-                                            @if ($item->status == true)
-                                                <form action="{{ route('projeks.belum', $item->id) }}" method="post">
-                                                    @method('put')
-                                                    @csrf
-                                                    <div class="form-check form-switch">
-                                                        <input class="form-check-input" type="checkbox" id="status"
-                                                            name="status" title="Selesai" checked onclick="submit()">
-                                                    </div>
-                                                </form>
-                                            @else
-                                                <form action="{{ route('projeks.selesai', $item->id) }}" method="post">
-                                                    @method('put')
-                                                    @csrf
-                                                    <div class="form-check form-switch">
-                                                        <input class="form-check-input" type="checkbox" id="status"
-                                                            name="status" title="Belum Selesai" onclick="submit()">
-                                                    </div>
-                                                </form>
-                                            @endif
+                                            {{ \Carbon\Carbon::parse($item->created_at)->translatedFormat('l, d F Y') }}
                                         </td>
                                         <td>
                                             <button type="button" class="btn btn-light rounded-pill" title="Ubah"
                                                 id='edit' name='edit' data-bs-toggle="modal"
                                                 data-bs-target="#editModal"
-                                                data-bs-act="{{ route('projeks.update', $item->id) }}"
-                                                data-bs-nama_projek="{{ $item->nama_projek }}"
-                                                data-bs-deskripsi="{{ $item->deskripsi }}"
-                                                data-bs-keterangan="{{ $item->keterangan }}">
+                                                data-bs-act="{{ route('catatan.update', $item->id) }}"
+                                                data-bs-catatan="{{ $item->catatan }}">
                                                 <i class="ri-edit-2-line"></i></button>
                                             <button type="button" class="btn btn-light rounded-pill" title="Hapus"
                                                 id="hapus" name="hapus" data-bs-toggle="modal"
                                                 data-bs-target="#deleteModal"
-                                                data-bs-act="{{ route('projeks.destroy', $item->id) }}"
-                                                data-bs-id="{{ $item->id }}" data-bs-name="{{ $item->nama_projek }}">
+                                                data-bs-act="{{ route('catatan.destroy', $item->id) }}"
+                                                data-bs-id="{{ $item->id }}"
+                                                data-bs-name="{{ \Carbon\Carbon::parse($item->created_at)->translatedFormat('l, d F Y') }}">
                                                 <i class="ri-delete-bin-line"></i></button>
                                         </td>
                                     </tr>
@@ -96,32 +69,28 @@
                     <div class="modal-dialog modal-md modal-dialog-centered">
                         <div class="modal-content">
                             <div class="modal-header">
-                                <h5 class="modal-title">Tambah Projek</h5>
+                                <h5 class="modal-title">Tambah Catatan</h5>
                                 <button type="button" class="btn-close" data-bs-dismiss="modal"
                                     aria-label="Close"></button>
                             </div>
-                            <form class="row g-3 needs-validation" action="{{ route('projeks.store') }}" method="post"
+                            <form class="row g-3 needs-validation" action="{{ route('catatan.store') }}" method="post"
                                 novalidate>
                                 @csrf
                                 <div class="modal-body">
                                     <div class="row g-3">
                                         <div class="col-12">
-                                            <label for="nama_projek" class="form-label">Nama Projek</label>
-                                            <input type="text" class="form-control" id="nama_projek" name="nama_projek">
+                                            <label for="deskripsi" class="form-label">Hari</label>
+                                            <input class="form-control" id="tanggal" name="tanggal"
+                                                value="{{ \Carbon\Carbon::now()->translatedFormat('l, d F Y') }}" readonly>
                                         </div>
                                         <div class="col-12">
-                                            <label for="deskripsi" class="form-label">Deskripsi</label>
-                                            <textarea class="form-control" id="deskripsi" name="deskripsi" style="height: 100px;"></textarea>
-                                        </div>
-                                        <div class="col-12">
-                                            <label for="deskripsi" class="form-label">Keterangan</label>
-                                            <textarea class="form-control" id="keterangan" name="keterangan" style="height: 100px;"></textarea>
+                                            <label for="catatan" class="form-label">Catatan</label>
+                                            <textarea class="form-control" id="catatan" name="catatan" style="height: 150px;"></textarea>
                                         </div>
                                     </div>
                                 </div>
                                 <div class="modal-footer">
-                                    <button type="button" class="btn btn-secondary"
-                                        data-bs-dismiss="modal">Tutup</button>
+                                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Tutup</button>
                                     <button type="submit" class="btn btn-success">Simpan</button>
                                 </div>
                             </form>
@@ -134,7 +103,7 @@
                     <div class="modal-dialog modal-md modal-dialog-centered">
                         <div class="modal-content">
                             <div class="modal-header">
-                                <h5 class="modal-title">Ubah Projek</h5>
+                                <h5 class="modal-title">Ubah catatan</h5>
                                 <button type="button" class="btn-close" data-bs-dismiss="modal"
                                     aria-label="Close"></button>
                             </div>
@@ -145,17 +114,14 @@
                                 <div class="modal-body">
                                     <div class="row g-3">
                                         <div class="col-12">
-                                            <label for="nama_projek" class="form-label">Nama Projek</label>
-                                            <input type="text" class="form-control" id="nama_projek"
-                                                name="nama_projek">
+                                            <label for="deskripsi" class="form-label">Hari</label>
+                                            <input class="form-control" id="tanggal" name="tanggal"
+                                                value="{{ \Carbon\Carbon::now()->translatedFormat('l, d F Y') }}"
+                                                readonly>
                                         </div>
                                         <div class="col-12">
-                                            <label for="deskripsi" class="form-label">Deskripsi</label>
-                                            <textarea class="form-control" id="deskripsi" name="deskripsi" style="height: 100px;"></textarea>
-                                        </div>
-                                        <div class="col-12">
-                                            <label for="deskripsi" class="form-label">Keterangan</label>
-                                            <textarea class="form-control" id="keterangan" name="keterangan" style="height: 100px;"></textarea>
+                                            <label for="catatan" class="form-label">Catatan</label>
+                                            <textarea class="form-control" id="catatan" name="catatan" style="height: 150px;"></textarea>
                                         </div>
                                     </div>
                                 </div>
@@ -184,8 +150,8 @@
                                 @method('delete')
                                 <div class="modal-body">
                                     <p class="text-center">
-                                        Yakin untuk menghapus <strong class="badge border-danger border-1 text-danger"
-                                            id="nama-projek"> </strong>?
+                                        Yakin untuk menghapus catatan hari <strong
+                                            class="badge border-danger border-1 text-danger" id="nama-projek"> </strong>?
                                     </p>
                                     <div class="alert alert-danger text-center" role="alert">
                                         <i class="bi bi-exclamation-octagon me-1"></i>
@@ -221,9 +187,7 @@
                 const updateButton = $(event.relatedTarget);
 
                 updateForm.attr('action', updateButton.attr('data-bs-act'));
-                updateForm.find('#nama_projek').val(updateButton.attr('data-bs-nama_projek'));
-                updateForm.find('#deskripsi').val(updateButton.attr('data-bs-deskripsi'));
-                updateForm.find('#keterangan').val(updateButton.attr('data-bs-keterangan'));
+                updateForm.find('#catatan').val(updateButton.attr('data-bs-catatan'));
             }).bind('hide.bs.modal', e => {
                 const updateForm = $('form#update-form');
                 updateForm.attr('action', '/');

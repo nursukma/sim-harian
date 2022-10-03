@@ -1286,11 +1286,10 @@ h6 {
 
 /* Datatable */
 
-
-/* .datatable {
+.datatable {
     table-layout: fixed !important;
     word-wrap: break-word;
-} */
+}
 
 .dataTable-selector {
     border-radius: 0.55rem;

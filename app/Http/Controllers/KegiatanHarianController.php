@@ -2,16 +2,13 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\KegiatanHarian;
 use App\Models\Projek;
 use Illuminate\Http\Request;
 
-class ProjekController extends Controller
+class KegiatanHarianController extends Controller
 {
-    const DATA_INPUT = [
-        'nama_projek',
-        'deskripsi',
-        'keterangan',
-    ];
+    const DATA_INPUT = ['kegiatan', 'projek_id', 'user_id'];
     /**
      * Display a listing of the resource.
      *
@@ -20,8 +17,9 @@ class ProjekController extends Controller
     public function index()
     {
         //
-        $data = Projek::all();
-        return view('projek.index', compact('data'));
+        $data =  KegiatanHarian::all();
+        $projek = Projek::all()->where('status', 0);
+        return view('kegiatan.index', compact('data', 'projek'));
     }
 
     /**
@@ -46,9 +44,8 @@ class ProjekController extends Controller
         if (auth()->user()) {
             $data = $request->only(self::DATA_INPUT);
             $data['user_id'] = auth()->user()->id;
-            $data['status'] = 0;
-            Projek::create($data);
-            return back()->with('message', 'Berhasil tambah data!');
+            KegiatanHarian::create($data);
+            return back()->with('message', 'Berhasil menambahkan kegiatan!');
         }
         return back()->with('message', 'Tidak Punya Akses');
     }
@@ -56,10 +53,10 @@ class ProjekController extends Controller
     /**
      * Display the specified resource.
      *
-     * @param  \App\Models\Projek  $projek
+     * @param  \App\Models\KegiatanHarian  $kegiatanHarian
      * @return \Illuminate\Http\Response
      */
-    public function show(Projek $projek)
+    public function show(KegiatanHarian $kegiatanHarian)
     {
         //
     }
@@ -67,10 +64,10 @@ class ProjekController extends Controller
     /**
      * Show the form for editing the specified resource.
      *
-     * @param  \App\Models\Projek  $projek
+     * @param  \App\Models\KegiatanHarian  $kegiatanHarian
      * @return \Illuminate\Http\Response
      */
-    public function edit(Projek $projek)
+    public function edit(KegiatanHarian $kegiatanHarian)
     {
         //
     }
@@ -79,16 +76,17 @@ class ProjekController extends Controller
      * Update the specified resource in storage.
      *
      * @param  \Illuminate\Http\Request  $request
-     * @param  \App\Models\Projek  $projek
+     * @param  \App\Models\KegiatanHarian  $kegiatanHarian
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, Projek $projek)
+    public function update(Request $request, KegiatanHarian $kegiatanHarian)
     {
         //
         if (auth()->user()) {
             $data = $request->only(self::DATA_INPUT);
-            $projek->update($data);
-            return back()->with('message', 'Berhasil ubah data!');
+            $data['user_id'] = auth()->user()->id;
+            $kegiatanHarian->update($data);
+            return back()->with('message', 'Berhasil mengubah kegiatan!');
         }
         return back()->with('message', 'Tidak Punya Akses');
     }
@@ -96,37 +94,16 @@ class ProjekController extends Controller
     /**
      * Remove the specified resource from storage.
      *
-     * @param  \App\Models\Projek  $projek
+     * @param  \App\Models\KegiatanHarian  $kegiatanHarian
      * @return \Illuminate\Http\Response
      */
-    public function destroy(Projek $projek)
+    public function destroy(KegiatanHarian $kegiatanHarian)
     {
         //
         if (auth()->user()) {
-            $projek->delete();
-            return back()->with('message', 'Berhasil hapus data!');
+            $kegiatanHarian->delete();
+            return back()->with('message', 'Berhasil menghapus kegiatan!');
         }
         return back()->with('message', 'Tidak Punya Akses');
-    }
-
-    public function selesai($id)
-    {
-        //
-        $data = Projek::where('id', $id)->first();
-        if ($data) {
-            $data->status = 1;
-            $data->save();
-        }
-        return back()->with('message', 'Projek berhasil diselesaikan');
-    }
-
-    public function belum($id)
-    {
-        $data = Projek::where('id', $id)->first();
-        if ($data) {
-            $data->status = 0;
-            $data->save();
-        }
-        return back()->with('message', 'Projek belum diselesaikan');
     }
 }

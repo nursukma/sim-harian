@@ -22,4 +22,9 @@ class Projek extends Model
     {
         return $this->belongsTo(User::class, 'user_id');
     }
+
+    public function kegiatan()
+    {
+        return $this->hasMany(KegiatanHarian::class, 'projek_id', 'id');
+    }
 }
