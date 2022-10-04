@@ -20,7 +20,7 @@
                 <div class="col-lg-8">
                     <div class="row">
 
-                        <!-- Sales Card -->
+                        <!-- Projek Card -->
                         <div class="col-xxl-4 col-md-6">
                             <div class="card info-card sales-card">
                                 <div class="card-body">
@@ -41,9 +41,9 @@
                                 </div>
 
                             </div>
-                        </div><!-- End Sales Card -->
+                        </div><!-- End Projek Card -->
 
-                        <!-- Revenue Card -->
+                        <!-- Absens masuk Card -->
                         <div class="col-xxl-4 col-md-6">
                             <div class="card info-card revenue-card">
                                 <div class="card-body">
@@ -63,9 +63,9 @@
                                 </div>
 
                             </div>
-                        </div><!-- End Revenue Card -->
+                        </div><!-- End Absens masuk Card -->
 
-                        <!-- Customers Card -->
+                        <!-- Absens bolos Card -->
                         <div class="col-xxl-4 col-xl-12">
 
                             <div class="card info-card customers-card">
@@ -88,7 +88,7 @@
                                 </div>
                             </div>
 
-                        </div><!-- End Customers Card -->
+                        </div><!-- End Absens bolos Card -->
 
                         <!-- Reports -->
                         <div class="col-12">
@@ -109,68 +109,10 @@
                                 </div>
 
                                 <div class="card-body">
-                                    <h5 class="card-title">Reports <span>/Today</span></h5>
+                                    <h5 class="card-title">Intesitas <span>| Pengerjaan Projek</span></h5>
 
                                     <!-- Line Chart -->
                                     <div id="reportsChart"></div>
-
-                                    <script>
-                                        document.addEventListener("DOMContentLoaded", () => {
-                                            new ApexCharts(document.querySelector("#reportsChart"), {
-                                                series: [{
-                                                    name: 'Sales',
-                                                    data: [31, 40, 28, 51, 42, 82, 56],
-                                                }, {
-                                                    name: 'Revenue',
-                                                    data: [11, 32, 45, 32, 34, 52, 41]
-                                                }, {
-                                                    name: 'Customers',
-                                                    data: [15, 11, 32, 18, 9, 24, 11]
-                                                }],
-                                                chart: {
-                                                    height: 350,
-                                                    type: 'area',
-                                                    toolbar: {
-                                                        show: false
-                                                    },
-                                                },
-                                                markers: {
-                                                    size: 4
-                                                },
-                                                colors: ['#4154f1', '#2eca6a', '#ff771d'],
-                                                fill: {
-                                                    type: "gradient",
-                                                    gradient: {
-                                                        shadeIntensity: 1,
-                                                        opacityFrom: 0.3,
-                                                        opacityTo: 0.4,
-                                                        stops: [0, 90, 100]
-                                                    }
-                                                },
-                                                dataLabels: {
-                                                    enabled: false
-                                                },
-                                                stroke: {
-                                                    curve: 'smooth',
-                                                    width: 2
-                                                },
-                                                xaxis: {
-                                                    type: 'datetime',
-                                                    categories: ["2018-09-19T00:00:00.000Z", "2018-09-19T01:30:00.000Z",
-                                                        "2018-09-19T02:30:00.000Z", "2018-09-19T03:30:00.000Z",
-                                                        "2018-09-19T04:30:00.000Z", "2018-09-19T05:30:00.000Z",
-                                                        "2018-09-19T06:30:00.000Z"
-                                                    ]
-                                                },
-                                                tooltip: {
-                                                    x: {
-                                                        format: 'dd/MM/yy HH:mm'
-                                                    },
-                                                }
-                                            }).render();
-                                        });
-                                    </script>
-                                    <!-- End Line Chart -->
 
                                 </div>
 
@@ -365,60 +307,19 @@
                         </div>
 
                         <div class="card-body">
-                            <h5 class="card-title">Recent Activity <span>| Today</span></h5>
+                            <h5 class="card-title">Catatan <span>| Hari Ini</span></h5>
 
                             <div class="activity">
-
-                                <div class="activity-item d-flex">
-                                    <div class="activite-label">32 min</div>
-                                    <i class='bi bi-circle-fill activity-badge text-success align-self-start'></i>
-                                    <div class="activity-content">
-                                        Quia quae rerum <a href="#" class="fw-bold text-dark">explicabo
-                                            officiis</a> beatae
-                                    </div>
-                                </div><!-- End activity item-->
-
-                                <div class="activity-item d-flex">
-                                    <div class="activite-label">56 min</div>
-                                    <i class='bi bi-circle-fill activity-badge text-danger align-self-start'></i>
-                                    <div class="activity-content">
-                                        Voluptatem blanditiis blanditiis eveniet
-                                    </div>
-                                </div><!-- End activity item-->
-
-                                <div class="activity-item d-flex">
-                                    <div class="activite-label">2 hrs</div>
-                                    <i class='bi bi-circle-fill activity-badge text-primary align-self-start'></i>
-                                    <div class="activity-content">
-                                        Voluptates corrupti molestias voluptatem
-                                    </div>
-                                </div><!-- End activity item-->
-
-                                <div class="activity-item d-flex">
-                                    <div class="activite-label">1 day</div>
-                                    <i class='bi bi-circle-fill activity-badge text-info align-self-start'></i>
-                                    <div class="activity-content">
-                                        Tempore autem saepe <a href="#" class="fw-bold text-dark">occaecati
-                                            voluptatem</a> tempore
-                                    </div>
-                                </div><!-- End activity item-->
-
-                                <div class="activity-item d-flex">
-                                    <div class="activite-label">2 days</div>
-                                    <i class='bi bi-circle-fill activity-badge text-warning align-self-start'></i>
-                                    <div class="activity-content">
-                                        Est sit eum reiciendis exercitationem
-                                    </div>
-                                </div><!-- End activity item-->
-
-                                <div class="activity-item d-flex">
-                                    <div class="activite-label">4 weeks</div>
-                                    <i class='bi bi-circle-fill activity-badge text-muted align-self-start'></i>
-                                    <div class="activity-content">
-                                        Dicta dolorem harum nulla eius. Ut quidem quidem sit quas
-                                    </div>
-                                </div><!-- End activity item-->
-
+                                @foreach ($catatan as $item)
+                                    <div class="activity-item d-flex">
+                                        <div class="activite-label">
+                                            {{ \Carbon\Carbon::parse($item->created_at)->translatedFormat('H:m') }}</div>
+                                        <i class='bi bi-circle-fill activity-badge text-primary align-self-start'></i>
+                                        <div class="activity-content">
+                                            {{ $item->catatan }}
+                                        </div>
+                                    </div><!-- End activity item-->
+                                @endforeach
                             </div>
 
                         </div>
@@ -643,4 +544,76 @@
         </section>
 
     </main><!-- End #main -->
+@endsection
+
+@section('page-script')
+    <script>
+        // Line chart
+        document.addEventListener("DOMContentLoaded", () => {
+            var array = [];
+            var arrayCat = [];
+
+            var optionChart = {
+
+            }
+
+            $.get('projek-report', function(data) {
+                $.each(data, function(key, val) {
+                    val.forEach(item => {
+                        array.push({
+                            name: item.projek.nama_projek,
+                            data: [{
+                                xaxis: key,
+                                yaxis: item.projek_id
+                            }]
+                        })
+                    });
+                    arrayCat.push(
+                        key
+                    )
+                    // console.log(key)
+                });
+                new ApexCharts(document.querySelector("#reportsChart"), {
+                    series: array,
+                    chart: {
+                        height: 350,
+                        type: 'area',
+                        toolbar: {
+                            show: false
+                        },
+                    },
+                    markers: {
+                        size: 4
+                    },
+                    colors: ['#4154f1', '#2eca6a', '#ff771d'],
+                    fill: {
+                        type: "gradient",
+                        gradient: {
+                            shadeIntensity: 1,
+                            opacityFrom: 0.3,
+                            opacityTo: 0.4,
+                            stops: [0, 90, 100]
+                        }
+                    },
+                    dataLabels: {
+                        enabled: false
+                    },
+                    stroke: {
+                        curve: 'smooth',
+                        width: 2
+                    },
+                    xaxis: {
+                        categories: arrayCat
+                    },
+                    tooltip: {
+                        x: {
+                            format: 'dd/MM/yy'
+                        },
+                    }
+                }).render();
+                console.log(arrayCat)
+            });
+        });
+        // End Line Chart 
+    </script>
 @endsection

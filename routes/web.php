@@ -26,8 +26,10 @@ use Illuminate\Support\Facades\Auth;
 */
 
 Auth::routes();
+
 // Dashboard
 Route::resource('dashboard', HomeController::class);
+Route::get('projek-report', [HomeController::class, 'kerja_projek'])->name('projek-report');
 
 // Route::get('dashboard', [CustomAuthController::class, 'dashboard']); 
 // Route::permanentRedirect('/', '/login');

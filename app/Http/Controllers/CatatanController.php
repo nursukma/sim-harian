@@ -44,12 +44,15 @@ class CatatanController extends Controller
         if (auth()->user()) {
             $catatan = $request->catatan;
             $projek = KegiatanHarian::whereDate('created_at', Carbon::now('F'))->first();
-            $projek_id = $projek->id;
-            $user_id = auth()->user()->id;
+            if ($projek != null) {
+                $projek_id = $projek->id;
+                $user_id = auth()->user()->id;
 
-            $data = ['catatan' => $catatan, 'kegiatan_id' => $projek_id, 'user_id' => $user_id];
-            ModelsCatatan::create($data);
-            return back()->with('message', 'Berhasil menambahkan catatan!');
+                $data = ['catatan' => $catatan, 'kegiatan_id' => $projek_id, 'user_id' => $user_id];
+                ModelsCatatan::create($data);
+                return back()->with('message', 'Berhasil menambahkan catatan!');
+            }
+            return back()->with('message', 'Silakan tambah kegiatan dulu!');
         }
         return back()->with('message', 'Tidak Punya Akses');
     }
