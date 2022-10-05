@@ -53,6 +53,27 @@
              </a>
          </li><!-- End Catatan Page Nav -->
 
+         <li class="nav-heading">Keuangan</li>
+
+         <li class="nav-item">
+             <a class="nav-link collapsed" data-bs-target="#uang-nav" data-bs-toggle="collapse" href="#">
+                 <i class="ri-money-dollar-circle-line"></i><span>Keuangan</span><i
+                     class="bi bi-chevron-down ms-auto"></i>
+             </a>
+             <ul id="uang-nav" class="nav-content collapse " data-bs-parent="#sidebar-nav">
+                 <li>
+                     <a href="/uang-masuk">
+                         <i class="bi bi-circle"></i><span>Masuk</span>
+                     </a>
+                 </li>
+                 <li>
+                     <a href="/uang-keluar">
+                         <i class="bi bi-circle"></i><span>Keluar</span>
+                     </a>
+                 </li>
+             </ul>
+         </li><!-- End Absensi Nav -->
+
      </ul>
 
  </aside><!-- End Sidebar-->

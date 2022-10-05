@@ -6,6 +6,7 @@ use App\Http\Controllers\Auth\LoginController;
 use App\Http\Controllers\CatatanController;
 use App\Http\Controllers\HomeController;
 use App\Http\Controllers\KegiatanHarianController;
+use App\Http\Controllers\KeuanganMasukController;
 use App\Http\Controllers\ProjekController;
 use App\Models\Absen;
 use App\Models\Catatan;
@@ -50,3 +51,6 @@ Route::resource('kegiatan-harian', KegiatanHarianController::class);
 
 // catatan
 Route::resource('catatan', CatatanController::class);
+
+// keuangan
+Route::resource('uang-masuk', KeuanganMasukController::class);

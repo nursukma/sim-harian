@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Waktu pembuatan: 04 Okt 2022 pada 11.59
+-- Waktu pembuatan: 05 Okt 2022 pada 11.52
 -- Versi server: 10.4.24-MariaDB
 -- Versi PHP: 8.1.6
 
@@ -42,7 +42,8 @@ CREATE TABLE `absens` (
 
 INSERT INTO `absens` (`id`, `user_id`, `keterangan`, `status`, `created_at`, `updated_at`) VALUES
 (1, 1, 'Datang', 1, '2022-10-03 04:00:00', '2022-10-02 21:00:54'),
-(2, 1, 'Pulang', 0, '2022-10-03 10:00:00', NULL);
+(2, 1, 'Pulang', 0, '2022-10-03 10:00:00', NULL),
+(3, 1, 'Datang', 1, '2022-10-05 03:00:00', '2022-10-04 20:38:15');
 
 -- --------------------------------------------------------
 
@@ -89,6 +90,49 @@ INSERT INTO `kegiatan_harians` (`id`, `kegiatan`, `user_id`, `projek_id`, `creat
 (1, 'Menambahkan dan mengumpulkan frontend komponen', 1, 2, '2022-10-02 21:36:49', '2022-10-02 21:42:02'),
 (2, 'Membuat form semua field', 1, 2, '2022-10-03 22:56:36', '2022-10-03 22:56:36'),
 (3, 'menyiapkan komponen dan dpendensi', 1, 3, '2022-10-03 22:56:56', '2022-10-03 22:56:56');
+
+-- --------------------------------------------------------
+
+--
+-- Struktur dari tabel `keuangan`
+--
+
+CREATE TABLE `keuangan` (
+  `id` bigint(20) UNSIGNED NOT NULL,
+  `nominal` int(11) NOT NULL,
+  `status` tinyint(1) NOT NULL,
+  `catatan` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
+  `jumlah_uang` int(11) NOT NULL,
+  `user_id` bigint(20) UNSIGNED NOT NULL,
+  `created_at` timestamp NULL DEFAULT NULL,
+  `updated_at` timestamp NULL DEFAULT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+
+--
+-- Dumping data untuk tabel `keuangan`
+--
+
+INSERT INTO `keuangan` (`id`, `nominal`, `status`, `catatan`, `jumlah_uang`, `user_id`, `created_at`, `updated_at`) VALUES
+(6, 4200, 1, 'asdad', 4200, 1, '2022-10-04 21:54:08', '2022-10-04 21:54:08');
+
+-- --------------------------------------------------------
+
+--
+-- Struktur dari tabel `migrations`
+--
+
+CREATE TABLE `migrations` (
+  `id` int(10) UNSIGNED NOT NULL,
+  `migration` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
+  `batch` int(11) NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+
+--
+-- Dumping data untuk tabel `migrations`
+--
+
+INSERT INTO `migrations` (`id`, `migration`, `batch`) VALUES
+(1, '2022_10_05_040233_create_keuangan_masuks_table', 1);
 
 -- --------------------------------------------------------
 
@@ -191,6 +235,19 @@ ALTER TABLE `kegiatan_harians`
   ADD KEY `fk_users_kegiatans` (`user_id`);
 
 --
+-- Indeks untuk tabel `keuangan`
+--
+ALTER TABLE `keuangan`
+  ADD PRIMARY KEY (`id`),
+  ADD KEY `fk_users_keuangan` (`user_id`);
+
+--
+-- Indeks untuk tabel `migrations`
+--
+ALTER TABLE `migrations`
+  ADD PRIMARY KEY (`id`);
+
+--
 -- Indeks untuk tabel `projeks`
 --
 ALTER TABLE `projeks`
@@ -219,7 +276,7 @@ ALTER TABLE `users`
 -- AUTO_INCREMENT untuk tabel `absens`
 --
 ALTER TABLE `absens`
-  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
+  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=4;
 
 --
 -- AUTO_INCREMENT untuk tabel `catatans`
@@ -232,6 +289,18 @@ ALTER TABLE `catatans`
 --
 ALTER TABLE `kegiatan_harians`
   MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=4;
+
+--
+-- AUTO_INCREMENT untuk tabel `keuangan`
+--
+ALTER TABLE `keuangan`
+  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=7;
+
+--
+-- AUTO_INCREMENT untuk tabel `migrations`
+--
+ALTER TABLE `migrations`
+  MODIFY `id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
 
 --
 -- AUTO_INCREMENT untuk tabel `projeks`
@@ -273,6 +342,12 @@ ALTER TABLE `catatans`
 --
 ALTER TABLE `kegiatan_harians`
   ADD CONSTRAINT `fk_users_kegiatans` FOREIGN KEY (`user_id`) REFERENCES `users` (`id`) ON DELETE CASCADE ON UPDATE CASCADE;
+
+--
+-- Ketidakleluasaan untuk tabel `keuangan`
+--
+ALTER TABLE `keuangan`
+  ADD CONSTRAINT `fk_users_keuangan` FOREIGN KEY (`user_id`) REFERENCES `users` (`id`) ON DELETE CASCADE ON UPDATE CASCADE;
 
 --
 -- Ketidakleluasaan untuk tabel `projeks`
